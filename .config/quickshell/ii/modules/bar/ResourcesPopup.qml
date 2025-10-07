@@ -140,6 +140,42 @@ StyledPopup {
                     value: (ResourceUsage.cpuUsage > 0.8 ? Translation.tr("High") : ResourceUsage.cpuUsage > 0.4 ? Translation.tr("Medium") : Translation.tr("Low")) + ` (${Math.round(ResourceUsage.cpuUsage * 100)}%)`
                 }
             }
+            Column {
+                spacing: 4
+                ResourceItem {
+                    icon: "thermostat"
+                    label: Translation.tr("Temperature:")
+                    value: `${Math.round(ResourceUsage.cpuTemp)}°C`
+                }
+            }
+        }
+
+
+        Column {
+            anchors.top: parent.top
+            spacing: 8
+
+            ResourceHeaderItem {
+                icon: "planner_review"
+                label: "GPU"
+            }
+            Column {
+                spacing: 4
+                ResourceItem {
+                    icon: "bolt"
+                    label: Translation.tr("Load:")
+                    value: (ResourceUsage.gpuUsage > 0.8 ? Translation.tr("High") : ResourceUsage.gpuUsage > 0.4 ? Translation.tr("Medium") : Translation.tr("Low")) + ` (${Math.round(ResourceUsage.gpuUsage * 100)}%)`
+                }
+            }
+
+            Column {
+                spacing: 4
+                ResourceItem {
+                    icon: "thermostat"
+                    label: Translation.tr("Temperature:")
+                    value: `${Math.round(ResourceUsage.gpuTemp)}°C`
+                }
+            }
         }
     }
 }

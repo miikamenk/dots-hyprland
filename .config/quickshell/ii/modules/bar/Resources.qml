@@ -43,6 +43,17 @@ MouseArea {
                 root.alwaysShowAllResources
             Layout.leftMargin: shown ? 6 : 0
             warningThreshold: Config.options.bar.resources.cpuWarningThreshold
+          }
+
+
+        Resource {
+            iconName: "gpu"
+            percentage: ResourceUsage.gpuUsage
+            shown: Config.options.bar.resources.alwaysShowGpu || 
+                !(MprisController.activePlayer?.trackTitle?.length > 0) ||
+                root.alwaysShowAllResources
+            Layout.leftMargin: shown ? 6 : 0
+            warningThreshold: Config.options.bar.resources.gpuWarningThreshold
         }
 
     }
