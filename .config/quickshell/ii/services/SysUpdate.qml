@@ -14,28 +14,19 @@ Singleton {
     property int aurCount: 0
     property int flatpakCount: 0
     property int totalCount: pacmanCount + aurCount + flatpakCount
-    property int pollIntervalMs: 60000 * Config.options.bar.weather.fetchInterval // poll every x minutes (default 10)
+    property int pollIntervalMs: 60000 * Config.options.bar.updates.fetchInterval // poll every x minutes (default 10)
     property string scriptPath: `${Directories.scriptPath}/custom/check-updates.sh`.replace(/file:\/\//, "")
-
-    signal refreshRequested()
 
 
     /* function to start the check process (will kill any previous run) */
     function runCheckScript() {
-        if (checkProcess.running) {
-            // stop previous run to avoid overlapping executions
-            try {
-                checkProcess.kill()
-            } catch (e) {
-                console.log("Could not kill existing check process:", e)
-            }
-        }
+        checkProcess.running = true
         checkProcess.start()
     }
 
     Process {
-        id: runCheckScript
-        running: true
+        id: checkProcess
+        running: false
         command: ["bash", "-c", root.scriptPath]
         stdout: SplitParser {
             onRead: data => {
@@ -54,10 +45,6 @@ Singleton {
     }
 
     Component.onCompleted: {
-      root.runCheckScript()
-    }
-
-    onRefreshRequested: {
       root.runCheckScript()
     }
 

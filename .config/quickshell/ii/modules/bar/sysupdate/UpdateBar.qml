@@ -16,12 +16,12 @@ MouseArea {
     hoverEnabled: true
 
     onClicked: {
-        SysUpdate.onRefreshRequested();
         Quickshell.execDetached(["notify-send", 
             Translation.tr("Updates"), 
             Translation.tr("Refreshing (manually triggered)")
             , "-a", "Shell"
         ])
+        SysUpdate.runCheckScript();
     }
 
     RowLayout {
