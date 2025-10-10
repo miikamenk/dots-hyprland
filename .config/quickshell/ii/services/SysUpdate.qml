@@ -14,7 +14,7 @@ Singleton {
     property int aurCount: 0
     property int flatpakCount: 0
     property int totalCount: pacmanCount + aurCount + flatpakCount
-    property int pollIntervalMs: 60000 * 10 // poll every 10 minutes
+    property int pollIntervalMs: 60000 * Config.options.bar.weather.fetchInterval // poll every x minutes (default 10)
     property string scriptPath: `${Directories.scriptPath}/custom/check-updates.sh`.replace(/file:\/\//, "")
 
     signal refreshRequested()
