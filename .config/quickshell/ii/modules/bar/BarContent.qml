@@ -1,4 +1,5 @@
 import "./weather"
+import "./sysupdate"
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
@@ -328,6 +329,16 @@ Item { // Bar content region
 
                 sourceComponent: BarGroup {
                     WeatherBar {}
+                }
+            }
+
+
+            Loader {
+                Layout.leftMargin: 4
+                active: Config.options.bar.updates.enable
+
+                sourceComponent: BarGroup {
+                    UpdateBar {}
                 }
             }
         }

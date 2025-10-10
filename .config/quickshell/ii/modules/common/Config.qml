@@ -199,6 +199,11 @@ Singleton {
                     property bool useUSCS: false // Instead of metric (SI) units
                     property int fetchInterval: 10 // minutes
                 }
+
+                property JsonObject updates: JsonObject {
+                    property bool enable: true
+                    property int fetchInterval: 10 // minutes
+                }
             }
 
             property JsonObject battery: JsonObject {
