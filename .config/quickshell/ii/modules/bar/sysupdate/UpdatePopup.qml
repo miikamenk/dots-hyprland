@@ -76,7 +76,7 @@ StyledPopup {
             Column {
                 spacing: 4
                 ResourceItem {
-                    icon: "bolt"
+                    icon: "update"
                     label: Translation.tr("Pacman:")
                     value: SysUpdate.pacmanCount > 0 ? SysUpdate.pacmanCount : Translation.tr("None")
                 }
@@ -85,7 +85,7 @@ StyledPopup {
             Column {
                 spacing: 4
                 ResourceItem {
-                    icon: "bolt"
+                    icon: "update"
                     label: Translation.tr("Aur:")
                     value: SysUpdate.aurCount > 0 ? SysUpdate.aurCount : Translation.tr("None")
                 }
@@ -94,7 +94,7 @@ StyledPopup {
             Column {
                 spacing: 4
                 ResourceItem {
-                    icon: "thermostat"
+                    icon: "update"
                     label: Translation.tr("Flatpak:")
                     value: SysUpdate.flatpakCount > 0 ? SysUpdate.flatpakCount : Translation.tr("None")
                 }
