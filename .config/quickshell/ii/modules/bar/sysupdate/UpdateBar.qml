@@ -14,14 +14,28 @@ MouseArea {
     implicitHeight: Appearance.sizes.barHeight
 
     hoverEnabled: true
+    acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
 
-    onClicked: {
-        Quickshell.execDetached(["notify-send", 
-            Translation.tr("Updates"), 
-            Translation.tr("Refreshing (manually triggered)")
-            , "-a", "Shell"
-        ])
-        SysUpdate.runCheckScript();
+    onClicked: (mouse) => {
+        if (mouse.button === Qt.LeftButton) {
+            // Left-click
+            Quickshell.execDetached([
+                "notify-send",
+                Translation.tr("Updates"),
+                Translation.tr("Refreshing (manually triggered)"),
+                "-a", "Shell"
+            ])
+            SysUpdate.runCheckScript()
+          } else if (mouse.button === Qt.RightButton) {
+
+            Quickshell.execDetached([
+                "notify-send",
+                Translation.tr("Updates"),
+                Translation.tr("Refreshing (manually triggered)"),
+                "-a", "Shell"
+            ])
+            SysUpdate.runUpdateScript()
+        }
     }
 
     RowLayout {

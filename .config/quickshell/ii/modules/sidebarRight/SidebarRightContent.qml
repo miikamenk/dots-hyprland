@@ -139,6 +139,7 @@ Item {
                 GameMode {}
                 IdleInhibitor {}
                 EasyEffectsToggle {}
+                VpnToggle {}
                 CloudflareWarp {}
             }
 

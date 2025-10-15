@@ -24,6 +24,11 @@ Singleton {
         checkProcess.start()
     }
 
+    function runUpdateScript() {
+        updateProcess.running = true
+        updateProcess.start()
+    }
+
     Process {
         id: checkProcess
         running: false
@@ -40,6 +45,19 @@ Singleton {
                 } catch (e) {
                     console.log("Could not fetch updates:", e);
                 }
+            }
+        }
+    }
+
+    Process {
+        id: updateProcess
+        running: false
+        command: ["bash", "-c", `${root.scriptPath} up`]
+
+        onRunningChanged: {
+            if (!running) {
+                console.log("Update process finished (exit code:", exitCode, ")")
+                root.runCheckScript() // recheck after updates
             }
         }
     }
