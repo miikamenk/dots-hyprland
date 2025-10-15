@@ -239,6 +239,7 @@ Singleton {
                     property JsonObject notifications: JsonObject {
                         property bool showUnreadCount: false
                     }
+                }
 
                 property JsonObject updates: JsonObject {
                     property bool enable: true
