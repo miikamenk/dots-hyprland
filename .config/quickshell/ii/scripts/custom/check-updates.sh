@@ -5,7 +5,6 @@ if [ ! -f /etc/arch-release ]; then
   exit 0
 fi
 
-fpk_exup="pkg_installed flatpak && flatpak update"
 temp_file="$XDG_RUNTIME_DIR/update_info"
 [ -f "$temp_file" ] && source "$temp_file"
 
@@ -19,6 +18,13 @@ pkg_installed() {
     return 1
   fi
 }
+
+fpk_exup=""
+if pkg_installed flatpak; then
+  fpk_exup="flatpak update"
+fi
+
+echo $fpk_exup
 
 get_aurhlpr() {
   if pkg_installed yay; then
@@ -49,7 +55,7 @@ if [ "$1" == "up" ]; then
         $fpk_exup
         read -n 1 -p 'Press any key to continue...'
         "
-    kitty --title systemupdate "$SHELL" -ic "${command}"
+    kitty --title systemupdate "$SHELL" -ic "${command}; exit"
 
   else
     echo "No upgrade info found. Please run the script without parameters first."
