@@ -1,5 +1,5 @@
-import "./sysupdate"
 import qs.modules.bar.weather
+import qs.modules.bar.sysupdate
 import QtQuick
 import QtQuick.Layouts
 import Quickshell

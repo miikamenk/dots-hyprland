@@ -1,5 +1,3 @@
-import "./weather"
-import "./sysupdate"
 import QtQuick
 import Quickshell
 import Quickshell.Io
