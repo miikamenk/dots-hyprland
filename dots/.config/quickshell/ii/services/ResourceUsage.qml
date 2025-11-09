@@ -11,7 +11,6 @@ import Qt.labs.folderlistmodel 2.1
  * Simple polled resource usage service with RAM, Swap, and CPU usage.
  */
 Singleton {
-    id: root
     property double memoryTotal: 1
     property double memoryFree: 1
     property double memoryUsed: memoryTotal - memoryFree
@@ -33,48 +32,6 @@ Singleton {
       running: true 
       repeat: true
       onTriggered: {
-    property string maxAvailableMemoryString: kbToGbString(ResourceUsage.memoryTotal)
-    property string maxAvailableSwapString: kbToGbString(ResourceUsage.swapTotal)
-    property string maxAvailableCpuString: "--"
-
-    readonly property int historyLength: Config?.options.resources.historyLength ?? 60
-    property list<real> cpuUsageHistory: []
-    property list<real> memoryUsageHistory: []
-    property list<real> swapUsageHistory: []
-
-    function kbToGbString(kb) {
-        return (kb / (1024 * 1024)).toFixed(1) + " GB";
-    }
-
-    function updateMemoryUsageHistory() {
-        memoryUsageHistory = [...memoryUsageHistory, memoryUsedPercentage]
-        if (memoryUsageHistory.length > historyLength) {
-            memoryUsageHistory.shift()
-        }
-    }
-    function updateSwapUsageHistory() {
-        swapUsageHistory = [...swapUsageHistory, swapUsedPercentage]
-        if (swapUsageHistory.length > historyLength) {
-            swapUsageHistory.shift()
-        }
-    }
-    function updateCpuUsageHistory() {
-        cpuUsageHistory = [...cpuUsageHistory, cpuUsage]
-        if (cpuUsageHistory.length > historyLength) {
-            cpuUsageHistory.shift()
-        }
-    }
-    function updateHistories() {
-        updateMemoryUsageHistory()
-        updateSwapUsageHistory()
-        updateCpuUsageHistory()
-    }
-
-	Timer {
-		interval: 1
-        running: true 
-        repeat: true
-		onTriggered: {
             // Reload files
             fileMeminfo.reload()
             fileStat.reload()
@@ -107,8 +64,6 @@ Singleton {
             // Trigger the GPU usage and sensors processes to run now
             gpuUsageProc.running = true
             sensorsProc.running = true
-
-            root.updateHistories()
             interval = Config.options?.resources?.updateInterval ?? 3000
       }
     }
@@ -230,15 +185,4 @@ Singleton {
 
 	FileView { id: fileMeminfo; path: "/proc/meminfo" }
   FileView { id: fileStat; path: "/proc/stat" }
-    Process {
-        id: findCpuMaxFreqProc
-        command: ["bash", "-c", "lscpu | grep 'CPU max MHz' | awk '{print $4}'"]
-        running: true
-        stdout: StdioCollector {
-            id: outputCollector
-            onStreamFinished: {
-                root.maxAvailableCpuString = (parseFloat(outputCollector.text) / 1000).toFixed(0) + " GHz"
-            }
-        }
-    }
 }

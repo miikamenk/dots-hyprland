@@ -91,7 +91,7 @@ StyledPopup {
             }
             Column {
                 spacing: 4
-                ResourceItem {
+                StyledPopupValueRow {
                     icon: "thermostat"
                     label: Translation.tr("Temperature:")
                     value: `${Math.round(ResourceUsage.cpuTemp)}°C`
@@ -104,13 +104,13 @@ StyledPopup {
             anchors.top: parent.top
             spacing: 8
 
-            ResourceHeaderItem {
+            StyledPopupHeaderRow {
                 icon: "planner_review"
                 label: "GPU"
             }
             Column {
                 spacing: 4
-                ResourceItem {
+                StyledPopupValueRow {
                     icon: "bolt"
                     label: Translation.tr("Load:")
                     value: (ResourceUsage.gpuUsage > 0.8 ? Translation.tr("High") : ResourceUsage.gpuUsage > 0.4 ? Translation.tr("Medium") : Translation.tr("Low")) + ` (${Math.round(ResourceUsage.gpuUsage * 100)}%)`
@@ -119,7 +119,7 @@ StyledPopup {
 
             Column {
                 spacing: 4
-                ResourceItem {
+                StyledPopupValueRow {
                     icon: "thermostat"
                     label: Translation.tr("Temperature:")
                     value: `${Math.round(ResourceUsage.gpuTemp)}°C`
