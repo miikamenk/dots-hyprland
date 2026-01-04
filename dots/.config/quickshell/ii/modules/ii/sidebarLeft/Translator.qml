@@ -43,6 +43,27 @@ Item {
         if (focus) {
             root.inputField.forceActiveFocus()
         }
+      }
+
+    function swapLanguages() {
+        // Swap languages
+        let temp = root.sourceLanguage;
+        root.sourceLanguage = root.targetLanguage;
+        root.targetLanguage = temp;
+        
+        // Save to config
+        Config.options.language.translator.sourceLanguage = root.sourceLanguage;
+        Config.options.language.translator.targetLanguage = root.targetLanguage;
+        
+        // Swap text
+        let tempText = root.inputField.text;
+        root.inputField.text = root.translatedText;
+        root.translatedText = tempText;
+        
+        // Trigger new translation if needed
+        if (root.inputField.text.trim().length > 0) {
+            translateTimer.restart();
+        }
     }
 
     Timer {
@@ -164,6 +185,22 @@ Item {
                             }
                             Qt.openUrlExternally(url);
                         }
+                      }
+                    GroupButton {
+                        id: swapButton
+                        Layout.alignment: Qt.AlignHCenter
+                        baseWidth: height
+                        buttonRadius: Appearance.rounding.small
+                        contentItem: MaterialSymbol {
+                            anchors.centerIn: parent
+                            horizontalAlignment: Text.AlignHCenter
+                            iconSize: Appearance.font.pixelSize.larger
+                            text: "swap_horiz"
+                            color: swapButton.enabled ? Appearance.colors.colOnLayer1 : Appearance.colors.colSubtext
+                        }
+                        onClicked: {
+                            root.swapLanguages();
+                        }
                     }
                 }
 
@@ -198,6 +235,21 @@ Item {
                 }
                 onClicked: {
                     root.inputField.text = Quickshell.clipboardText
+                }
+            }
+            GroupButton {
+                id: copyInputButton
+                baseWidth: height
+                buttonRadius: Appearance.rounding.small
+                contentItem: MaterialSymbol {
+                    anchors.centerIn: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    iconSize: Appearance.font.pixelSize.larger
+                    text: "content_copy"
+                    color: copyButton.enabled ? Appearance.colors.colOnLayer1 : Appearance.colors.colSubtext
+                }
+                onClicked: {
+                     Quickshell.clipboardText = root.inputField.text
                 }
             }
             GroupButton {
