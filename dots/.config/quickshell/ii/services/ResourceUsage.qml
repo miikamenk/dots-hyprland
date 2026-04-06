@@ -78,6 +78,16 @@ Singleton {
                 gpuType = text.trim()
             }
         }
+      }
+
+    Process {
+        id: findCpuMaxFreqProc
+        environment: ({
+            LANG: "C",
+            LC_ALL: "C"
+        })
+        command: ["bash", "-c", "lscpu | grep 'CPU max MHz' | awk '{print $4}'"]
+        running: true
     }
 
     Process {

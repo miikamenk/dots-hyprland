@@ -24,7 +24,7 @@ Item {
         Bluetooth.defaultAdapter.discovering = false;
     }
 
-    PageColumn {
+    WPanelPageColumn {
         anchors.fill: parent
 
         BodyRectangle {
@@ -61,7 +61,7 @@ Item {
             }
         }
 
-        Separator {}
+        WPanelSeparator {}
 
         FooterRectangle {}
     }
@@ -87,9 +87,9 @@ Item {
             name: Translation.tr("Enable now")
             description: Translation.tr("More comfortable viewing at night")
             iconName: WIcons.nightLightIcon
-            checked: Hyprsunset.active
+            checked: Hyprsunset.temperatureActive
             onCheckedChanged: {
-                Hyprsunset.toggle(checked);
+                Hyprsunset.toggleTemperature(checked);
             }
         }
 
